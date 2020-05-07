@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table td, th {
+            width: 250px;
+            text-align: center;
+            height: 40px;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        table th {
+            font-size: 28px;
+        }
+        table td {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body dir="auto">
+    <br/>
+    <br/>
+    <div align="center">
+        <table border="1">
+            <tr>
+                <th colspan="2">ברוכים הבאים</th>
+            </tr>
+            <tr>
+                <th colspan="2">מחשבון המרת תאריך לועזי לתאריך עברי</th>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        נא בחר תאריך לועזי
+                    </span>
+                </td>
+                <td>
+                    <input type="date" id="date" /><br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input style="font-size:18px; width:430px;" type="button" id="btn" value="לחץ כדי לקבל תאריך עברי" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    התאריך העברי הוא:
+                </td>
+                <td>
+                    <input style="text-align:center" type="text" disabled id="heDate">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        document.querySelector("#btn").onclick = function () {
+            var str = document.querySelector("#date").value;
+            var arrDate = new Array();
+            arrDate = str.split('-');
+            var newDate = arrDate[0] + "," + arrDate[1] + "," + arrDate[2];
+            var date = new Date(newDate);
+            var heDate = date.toLocaleDateString('he-IL-u-ca-hebrew');
+            var day = new Array();
+            var month1 = new Array();
+            var month = new Array();
+            var arr1 = new Array();
+            var arr2 = new Array();
+            var arr3 = new Array();
+            day = ["א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט", "י", "יא", "יב", "יג", "יד", "טו", "טז", "יז", "יח", "יט", "כ", "כא", "כב", "כג", "כד", "כה", "כו", "כז", "כח", "כט", "ל",];
+            month1 = ["תשרי", "חשון", "כסלו", "טבת", "שבט", "אדר", "ניסן", "אייר", "סיון", "תמוז", "אב", "אלול"];
+            month = ["תשרי", "חשון", "כסלו", "טבת", "שבט", "אדר א", "אדר ב", "ניסן", "אייר", "סיון", "תמוז", "אב", "אלול"];
+            arr1 = ["", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט"];
+            arr2 = ["", "י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ"];
+            arr3 = ["", "ק", "ר", "ש", "ת", "תק", "תר", "תש", "תת", "תתק"];
+            var spliter = new Array();
+            spliter = heDate.split('.');
+            var theDay = spliter[0] - 1;
+            var theMonth = spliter[1] - 1;
+            var theYear = spliter[2];
+            var newYear = theYear % 19;
+            var theYear1 = theYear % 10;
+            var MathTheYear2 = theYear % 100;
+            var theYear2 = Math.floor(MathTheYear2 / 10)
+            var MathTheYear3 = theYear % 1000 / 10;
+            var theYear3 = Math.floor(MathTheYear3 / 10);
+            var heDate3 = arr3[theYear3];
+            var heDate2 = arr2[theYear2];
+            var heDate1 = arr1[theYear1];
+            var theDate;
+            if (heDate1 == "") {
+                var theHeDateYear = heDate3 + '"' + heDate2;
+            }
+            else {
+                var theHeDateYear = heDate3 + heDate2 + '"' + heDate1;
+            }
+            if (newYear != 0 && newYear != 3 && newYear != 6 && newYear != 8 && newYear != 11 && newYear != 14 && newYear != 17) {
+                theDate = day[theDay] + " " + month1[theMonth] + " " + theHeDateYear;
+            }
+            else {
+                theDate = day[theDay] + " " + month[theMonth] + " " + theHeDateYear;
+            }
+            document.querySelector("#heDate").value = theDate;
+        }
+    </script>
+</body>
+</html>
